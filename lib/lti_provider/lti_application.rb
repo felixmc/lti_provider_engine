@@ -53,6 +53,10 @@ module LtiProvider
       session[:user_roles]
     end
 
+    def common_css_url
+      session[:common_css_url]
+    end
+
     def not_acceptable
       render text: "Unable to process request", status: 406
     end
