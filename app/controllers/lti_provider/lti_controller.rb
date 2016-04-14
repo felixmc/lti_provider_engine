@@ -33,7 +33,7 @@ module LtiProvider
 
       if launch
         [:account_id, :course_name, :course_id, :canvas_url, :tool_consumer_instance_guid,
-         :user_id, :user_name, :user_roles, :user_avatar_url].each do |attribute|
+         :user_id, :user_name, :user_roles, :user_avatar_url, :common_css_url].each do |attribute|
           session[attribute] = launch.public_send(attribute)
         end
 
