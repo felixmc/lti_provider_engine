@@ -24,7 +24,10 @@ module LtiProvider
       tc = IMS::LTI::ToolConfig.new({
         launch_url: lti_launch_url,
         title: LtiProvider::XmlConfig.tool_title,
-        description: LtiProvider::XmlConfig.tool_description
+        description: LtiProvider::XmlConfig.tool_description,
+        custom_params: {
+          common_css_url: '$Canvas.css.common'
+        }
       })
 
       tc.extend IMS::LTI::Extensions::Canvas::ToolConfig
@@ -64,7 +67,8 @@ module LtiProvider
       'lis_person_name_full'           => :user_name,
       'ext_roles'                      => :user_roles,
       'tool_consumer_instance_guid'    => :tool_consumer_instance_guid,
-      'user_image'                     => :user_avatar_url
+      'user_image'                     => :user_avatar_url,
+      'custom_common_css_url'          => :common_css_url
     }.each do |provider_param, method_name|
       define_method(method_name) { provider_params[provider_param] }
     end
