@@ -24,7 +24,10 @@ module LtiProvider
       tc = IMS::LTI::ToolConfig.new({
         launch_url: lti_launch_url,
         title: LtiProvider::XmlConfig.tool_title,
-        description: LtiProvider::XmlConfig.tool_description
+        description: LtiProvider::XmlConfig.tool_description,
+        custom_params: {
+          common_css_url: '$Canvas.css.common'
+        }
       })
 
       tc.extend IMS::LTI::Extensions::Canvas::ToolConfig
