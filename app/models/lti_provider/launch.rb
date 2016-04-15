@@ -21,17 +21,33 @@ module LtiProvider
     end
 
     def self.xml_config(lti_launch_url)
-      tc = IMS::LTI::ToolConfig.new({
-        launch_url: lti_launch_url,
-        title: LtiProvider::XmlConfig.tool_title,
-        description: LtiProvider::XmlConfig.tool_description,
-        custom_params: {
-          common_css_url: '$Canvas.css.common'
+      tc = IMS::LTI::Services::ToolConfig.new(
+        'title'         => LtiProvider::XmlConfig.tool_title, # I18n.t('SIS Grade Posting'),
+        'description'   => LtiProvider::XmlConfig.tool_description, # I18n.t('Provides grade posting to Student Information Systems through SIS App'),
+        'launch_url'    => lti_launch_url,
+        'custom_params' => {
+          'account_id'       => '$Canvas.account.id',
+          'common_css_url'   => '$Canvas.css.common',
+          'course_id'        => '$Canvas.course.id',
+          'user_id'          => '$Canvas.user.id',
+          'api_url'          => '$Canvas.api.baseUrl',
+          'high_contrast'    => '$Canvas.user.prefersHighContrast',
         }
-      })
+      )
 
-      tc.extend IMS::LTI::Extensions::Canvas::ToolConfig
-      platform = IMS::LTI::Extensions::Canvas::ToolConfig::PLATFORM
+
+
+      # tc = IMS::LTI::ToolConfig.new({
+      #   launch_url: lti_launch_url,
+      #   title: LtiProvider::XmlConfig.tool_title,
+      #   description: LtiProvider::XmlConfig.tool_description,
+      #   custom_params: {
+      #     common_css_url: '$Canvas.css.common'
+      #   }
+      # })
+
+      # tc.extend IMS::LTI::Extensions::Canvas::ToolConfig
+      # platform = IMS::LTI::Extensions::Canvas::ToolConfig::PLATFORM
 
       privacy_level = LtiProvider::XmlConfig.privacy_level || "public"
       tc.send("canvas_privacy_#{privacy_level}!")
